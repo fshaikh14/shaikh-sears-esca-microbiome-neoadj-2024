@@ -1,0 +1,24 @@
+RecordID,Study Arm (%),Sex at Birth (%),Age [yrs] (SD),Smoking History (%),Tumor Histology (%),CAP Regression Score (%),Residual Tumor at Resection (%),Group
+MD043.002,A,Male,63,Never,Adenocarcinoma,G0,0%,PCR
+MD043.007,A,Male,66,Never,Adenocarcinoma,G0,0%,PCR
+MD043.003,A,Male,66,Former,Adenocarcinoma,G0,0%,PCR
+MD043.012,A,Male,71,Former,Adenocarcinoma,G0,0%,PCR
+MD043.006,A,Male,55,Former,Adenocarcinoma,G0,0%,PCR
+MD043.015,A,Female,58,Former,Squamous,G0,0%,PCR
+MD043.019,B1,Male,61,Former,Adenocarcinoma,G0,0%,PCR
+PA009.037,B2,Male,59,Former,Adenocarcinoma,G0,0%,PCR
+MD043.009,A,Male,64,Former,Adenocarcinoma,G1,<10%,RVT
+MD043.014,A,Male,73,Never,Squamous,G1,<10%,RVT
+PA009.029,B1,Male,68,Former,Adenocarcinoma,G1,<10%,RVT
+MD043.022,B1,Male,58,Never,Adenocarcinoma,G1,<10%,RVT
+MD043.031,B2,Female,64,Never,Squamous,G1,<10%,RVT
+PA009.036,B2,Male,57,Former,Adenocarcinoma,G1,<10%,RVT
+MD043.001,A,Male,56,Never,Adenocarcinoma,G2,>10%,RVT
+MD043.016,A,Male,59,Never,Adenocarcinoma,G2,>10%,RVT
+MD043.010,A,Male,71,Never,Adenocarcinoma,G2,>10%,RVT
+PA009.030,B1,Male,71,Never,Adenocarcinoma,G2,>10%,RVT
+MD043.027,B1,Male,68,Former,Adenocarcinoma,G3,>10%,RVT
+MD043.028,B1,Male,65,Former,Adenocarcinoma,G2,>10%,RVT
+TX012.032,B2,Male,70,Never,Adenocarcinoma,G2,>10%,RVT
+MD043.035,B2,Male,70,Never,Adenocarcinoma,G2,>10%,RVT
+MD043.039,B2,Male,65,Never,Adenocarcinoma,G2,>10%,RVT

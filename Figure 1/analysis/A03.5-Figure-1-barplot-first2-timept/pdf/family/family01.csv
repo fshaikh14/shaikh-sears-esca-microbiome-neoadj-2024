@@ -1,0 +1,24 @@
+"RecordID","pathCR","p_Firmicutes.c_Clostridia.o_Clostridiales.f_Lachnospiraceae","p_Firmicutes.c_Clostridia.o_Clostridiales.f_Ruminococcaceae","p_Bacteroidetes.c_Bacteroidia.o_Bacteroidales.f_Bacteroidaceae","p_Firmicutes.c_Clostridia.o_Clostridiales.f_unassigned","p_Firmicutes.c_Erysipelotrichia.o_Erysipelotrichales.f_Erysipelotrichaceae","p_Firmicutes.c_Bacilli.o_Lactobacillales.f_Streptococcaceae","p_Firmicutes.c_Clostridia.o_Clostridiales.f_Peptostreptococcaceae","p_Actinobacteria.c_Actinobacteria.o_Coriobacteriales.f_Coriobacteriaceae","p_Bacteroidetes.c_Bacteroidia.o_Bacteroidales.f_Porphyromonadaceae","p_unassigned.c_unassigned.o_unassigned.f_unassigned","p_Firmicutes.c_unassigned.o_unassigned.f_unassigned","p_Firmicutes.c_Negativicutes.o_Selenomonadales.f_Veillonellaceae","p_Firmicutes.c_Clostridia.o_Clostridiales.f_Clostridiaceae_1","p_Bacteroidetes.c_Bacteroidia.o_Bacteroidales.f_Rikenellaceae","p_Firmicutes.c_Bacilli.o_Lactobacillales.f_Enterococcaceae","p_Bacteroidetes.c_Bacteroidia.o_Bacteroidales.f_Prevotellaceae","p_Firmicutes.c_Bacilli.o_unassigned.f_unassigned","p_Firmicutes.c_Negativicutes.o_Selenomonadales.f_Acidaminococcaceae","p_Proteobacteria.c_Gammaproteobacteria.o_Enterobacteriales.f_Enterobacteriaceae","Other.taxa"
+"MD043.001","PathCR 0",24.67,33.89,3.05,7.27,2.59,4.18,7.68,1.1,0.31,0.86,0.1,0.23,6,0.51,4.04,0.04,0.46,0.4,0.32,2.3
+"MD043.009","PathCR 0",31.97,18,6.42,16.96,8.55,4.16,2.77,4.95,0.54,0.03,0,0.53,0.04,0.98,0.04,0,0.23,0.79,0.1,2.94
+"MD043.010","PathCR 0",24.13,14.64,30.6,3.23,1.51,6.94,2.52,2.51,0.94,0,0,3.66,2.27,1.21,0,0,0.91,2.86,1.29,0.780000000000001
+"MD043.014","PathCR 0",30.44,8.59,36.54,2.35,5.31,2.74,0.13,4.51,2.27,0.23,0.13,0.12,0.16,2.14,0.05,0,0.02,0.01,0.01,4.25
+"MD043.016","PathCR 0",34.33,22.29,6.3,7.3,8.26,1.16,0,1.01,3.75,2.5,0.23,0,0.06,4.24,5.58,0.04,0.07,1.23,0.06,1.59
+"MD043.022","PathCR 0",30.52,34.62,5.02,3.46,3.55,0.23,1.97,0.98,0.33,0.6,0.01,3.18,0.23,0.23,5.25,4.94,0,0.03,0.05,4.8
+"MD043.027","PathCR 0",6.63,62.58,1.52,15.05,3.7,1.22,2.5,0.13,0.45,2.25,0.25,0.02,1.97,0.04,0,0,0.78,0.54,0.05,0.320000000000007
+"MD043.028","PathCR 0",18.82,31.76,17.88,7.38,1.79,5.77,7.68,0.79,0.68,1.33,0,1.11,0.47,1.49,0.02,0,0.35,1.14,0.38,1.16
+"MD043.031","PathCR 0",22.16,26.29,2.5,12.12,0.99,4.1,0.45,0.7,0.35,0.22,14.39,0,0.01,0.43,0.7,0,10.81,0.24,0.04,3.5
+"MD043.035","PathCR 0",28.13,22.15,1.94,8.17,1.73,23.35,3.56,2.09,0.46,5.52,0.01,0.17,0.25,0.4,0.09,0,0.26,0,0.05,1.67
+"MD043.039","PathCR 0",22.34,17.94,4.56,8.28,14.92,1.04,1.9,1.6,6.04,4.92,0.02,0.2,0.02,2.66,1.4,5.42,0.18,0.1,0,6.45999999999999
+"PA009.029","PathCR 0",24.29,1.86,0.55,17.78,50.19,0.96,0.01,1.39,0.06,1.12,0.3,0,0,0.01,0.01,0,0.02,0.02,0.02,1.41
+"PA009.030","PathCR 0",18.84,42.73,3.98,13.09,6,3.81,0.02,0.13,0.65,3.65,0.52,0,0.05,0.38,0,2.72,0.19,0,2.03,1.20999999999999
+"PA009.036","PathCR 0",30.26,9.04,35.85,6.25,2.47,2.42,0.01,2.25,2.43,0.04,0,0,0.1,1.83,0.11,1.05,0.52,1.65,0.2,3.52
+"TX012.032","PathCR 0",30.8,15.27,12.09,4.22,2.9,12.51,1.18,0.87,1.1,0.34,0.67,6.11,3.13,0.22,0,0.01,0.42,0,0.7,7.45999999999999
+"MD043.002","PathCR 1",22.69,39.99,15.78,4.1,1.17,2.61,7.27,0.87,0.53,0.65,0.02,0.05,0.6,1.13,0,0,0.35,0.36,0.52,1.31
+"MD043.003","PathCR 1",20.66,33.76,4.96,4.91,4.75,6.28,8.51,3.89,0.38,0.73,2.65,0.03,1.97,0.25,0,3.33,0.01,0.5,0.41,2.02
+"MD043.006","PathCR 1",14.61,41.91,29.56,0.49,1.33,1.59,0.04,0.17,0.86,0,0,0.04,0.01,0.27,3.95,0.46,0.05,0.61,0,4.05
+"MD043.007","PathCR 1",47.12,17.64,4.72,4.71,1.81,1.3,0.01,12.9,0.28,0.21,0,3.39,1.22,0.37,0,1.74,0.26,0.77,0.08,1.47
+"MD043.012","PathCR 1",25.3,18.45,34.82,1.99,4.33,2.84,0,0.74,1.72,0.21,5.29,0.03,0.01,1,0.08,0.21,0.49,0.82,0.76,0.909999999999997
+"MD043.015","PathCR 1",39.17,22.5,22.41,1.94,6.35,0.48,0.06,1.59,1.54,0.24,0.01,0,0.15,0.64,0,0.28,0.02,1.18,0,1.44
+"MD043.019","PathCR 1",17.34,8.58,17.4,3.46,1.32,33.86,0.36,0.38,0.24,0.2,0,5.9,3.86,0.12,0.26,0,0.6,0.76,1.66,3.7
+"PA009.037","PathCR 1",45.74,22.9,13.46,2.83,2.72,1.53,0.43,1.09,0.77,0.23,0.27,0.04,0.26,1.04,0,0,0.11,0.81,2.82,2.95

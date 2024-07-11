@@ -1,0 +1,13 @@
+OTU,v1,group,LDA,p_value
+Bacteroides_massiliensis,3.059419959,Path CR,2.628707973,0.049878801
+Bacteroides_uniformis,3.518775968,Path CR,2.968844284,0.048993518
+Bacteroides_vulgatus,4.043734419,Path CR,3.509071592,0.002420307
+Fusicatenibacter_saccharivorans,3.221883272,Path CR,2.680368069,0.001121391
+Roseburia_inulinivorans,3.034543771,Path CR,2.594995524,0.000513436
+otu1404_Roseburia_inulinivorans,2.691203185,No Path CR,2.241719769,0.009803201
+otu156_Clostridium_bolteae,2.89563144,Path CR,2.42088015,0.00731916
+otu1600_Ruminococcus_callidus,3.032209245,Path CR,2.638983855,0.0001833
+otu302_Faecalibacterium_prausnitzii,3.091814847,Path CR,2.889146845,0.037874854
+otu3285_Bacteroides_barnesiae,2.205634382,Path CR,2.081978626,0.046688215
+otu3601_Bacteroides_barnesiae,2.386838884,Path CR,2.058568318,0.046688215
+otu4818_Prevotella_loescheii,2.634544443,Path CR,2.331427492,0.013718995

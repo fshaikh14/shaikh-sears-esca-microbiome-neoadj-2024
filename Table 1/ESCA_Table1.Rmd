@@ -1,0 +1,56 @@
+---
+title: "ESCA_Table-1"
+author: "FYS"
+date: "2024-04-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+rm(list=ls())
+
+library(gtsummary)
+library(dplyr)
+
+```
+Create ESCA manuscript demographic table "Table 1" 
+
+```{r}
+
+# load data
+dat = read.csv("ESCA_Table1.csv",check.names = F)
+dat = as.data.frame(dat) %>% select(2:9)
+
+```
+
+
+# by patient 
+```{r}
+
+dat$`Residual Tumor at Resection (%)` = factor(dat$`Residual Tumor at Resection (%)`, levels = c("0%", "<10%", ">10%"))
+
+
+ tbl.esca <- dat %>% 
+  tbl_summary(by = Group,
+  type = c("Age [yrs] (SD)") ~ "continuous",
+  statistic = list("Age [yrs] (SD)" ~ "{mean} ({sd})")) %>%
+  add_p() %>%
+  bold_labels()
+
+tbl.esca
+
+
+
+
+```
+
+Save final table
+
+```{r}
+
+gt::gtsave(as_gt(tbl.esca), file = file.path("Table-1.pdf"))
+
+
+```
+

@@ -1,0 +1,315 @@
+---
+title: "ESCA-metabolite-analysis"
+author: "FYS"
+date: "2024-04-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+rm(list=ls())
+
+#load libraries
+library(tidyverse)
+library(rstatix)
+library(plotly)
+library(ggrepel)
+library(reshape2)
+library(ggpubr)
+
+# set up directories - configure per user
+# main_dir <- "C:/Users/fshaikh6/Desktop/Fecal metabolite analysis/"
+# output_dir <- "C:/Users/fshaikh6/Desktop/Fecal metabolite analysis/data_output"
+# input_dir <- "C:/Users/fshaikh6/Desktop/Fecal metabolite analysis/data_input"
+
+```
+
+
+```{r load data, QC, and drop outliers}
+
+#load data
+ESCA_TableS5 <- read_csv("data_input/ESCA_TableS5.csv")
+ESCA_TableS5 <- as_tibble(ESCA_TableS5)
+
+#find means for metabolites for all and by response group
+metab.only <- ESCA_TableS5 %>% select(6:1357)
+metab.mean.all <- metab.only %>% summarise_if(is.numeric, mean, na.rm = TRUE)
+metab.mean.response <- metab.only %>% group_by(Response) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE)
+
+#assign column and row names
+metab.rows = colnames(metab.mean.all)
+metab.col = c("metabolite", "intensity")
+
+#pivot longer in order to filter easier on values
+metab <- metab.mean.all %>% pivot_longer(everything())
+metab <- rename(metab, metabolite = name)
+metab <- rename(metab, intensity = value)
+
+# sort mean intensities into deciles to identify lowest one = 1
+# Dropping bottom 10% results in 1351 metabolites to 1215 metabolites, 136 dropped
+decile <- metab %>% mutate(quartile = ntile(intensity, 10))
+fil.metab <- decile %>% filter(!quartile %in% c("1")) 
+fil.metab <- fil.metab %>% column_to_rownames(var = "metabolite")
+dropped.metabolites <- decile %>% filter(quartile == 1)
+
+# create CSV for dropped metabolites to keep a record
+filename.dropped <- paste0("data_output/Metabolites-dropped-lowest-10th-decile", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+write.csv(dropped.metabolites, filename.dropped)
+
+filename.final <- paste0("data_output/Metabolites-final", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+write.csv(fil.metab, filename.final)
+
+
+```
+
+
+```{r log transformation and stats for visualization, stats table}
+
+OriginalMetabolites <- colnames(metab.only)
+FinalMetabolites <- rownames(fil.metab)
+MetaVars <- colnames(ESCA_TableS5)[1:6]
+FinalRawData <- ESCA_TableS5 %>% select(all_of(c(MetaVars, FinalMetabolites)))
+FinalLogData <- FinalRawData %>%
+  mutate_at(vars(FinalMetabolites), log) 
+mDataT <- FinalLogData %>% pivot_longer(cols = all_of(FinalMetabolites), names_to = "Metabolite")
+
+## Calculate P-value based on log data (using t-test)
+stat.test <- mDataT %>% group_by(Metabolite) %>% t_test(value ~ Response) %>% adjust_pvalue(method = "fdr")
+
+## fold change being calculate as RVT(positive/right side)/PCR(negative/left side).
+# for volcano plot, log2 fold change performed on raw values, and p values plotted on log(10)
+group_means_raw <- FinalRawData %>% group_by(Response) %>%
+  summarise_at(vars(FinalMetabolites), mean) 
+fold_change_raw <- (group_means_raw[2,FinalMetabolites]/group_means_raw[1,FinalMetabolites]) %>% 
+  pivot_longer(cols = FinalMetabolites, names_to = "Metabolite", values_to = "FC")
+stats_table <- left_join(stat.test, fold_change_raw) %>% mutate(Log2FC = log2(FC), log10p = log10(p))
+
+## setup for different plots
+stats_table <- stats_table %>% # add tooltip, "br" is line break for formatting
+  mutate( Text = paste("</br>", Metabolite, "</br>pvalue: ", round(p, digits = 4), "</br> FDR: ", round(p.adj, digits = 4)) )
+
+stats_table <- stats_table %>% mutate(`p<0.05` = p<0.05, `FDR<0.05` = p.adj<0.05, 
+                                      `>2-fold Change` = abs(Log2FC)>1) %>%
+  mutate(SigPandFold = `p<0.05` &`>2-fold Change` )
+
+# print stats table - ESCA Table S6
+filename.TableS6 <- paste0("data_output/ESCA-Table-S6-metabolite-fold-change", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+write.csv(stats_table, filename.TableS6)
+
+
+```
+
+```{r plot p1 all points, hover for label}
+# Volcano plots for metabolites - fold change and p value
+# p1 to p5 are using same data, different iterations with color coding
+# p5 used in final figure
+
+p1 <- stats_table%>%  ggplot(aes(x = Log2FC, y = -log10p, text = Text)) + 
+  geom_point() + theme_bw()+ geom_vline(xintercept = 0, color = "black") + 
+  geom_vline(xintercept = c(-1, 1), linetype = "dashed") + 
+  geom_hline(yintercept = -log10(0.05), linetype = "dashed")
+ggplotly(p1)
+
+```
+
+
+```{r color the ones that have p<0.05}
+p2 <- stats_table%>%  ggplot(aes(x = Log2FC, y = -log10p, text = Text, color = `p<0.05`)) + 
+  geom_point() + theme_bw()+ geom_vline(xintercept = 0, color = "black") + 
+  geom_vline(xintercept = c(-1, 1), linetype = "dashed") + 
+  geom_hline(yintercept = -log10(0.05), linetype = "dashed") + 
+  scale_color_manual(values = c("black", "blue"))
+p2
+
+
+```
+
+
+```{r color p<0.05 and fold change }
+p3 <- stats_table%>%  ggplot(aes(x = Log2FC, y = -log10p, text = Text, color = SigPandFold)) + 
+  geom_point() + theme_bw()+ geom_vline(xintercept = 0, color = "black") + 
+  geom_vline(xintercept = c(-1, 1), linetype = "dashed") + 
+  geom_hline(yintercept = -log10(0.05), linetype = "dashed") + 
+  scale_color_manual(values = c("black", "#A94643"))
+p3
+```
+
+
+```{r}
+
+
+p4 <- p3 + geom_text_repel(data = subset(stats_table, `p<0.05`),
+                           aes(label = Metabolite))
+p4
+
+```
+
+
+```{r}
+p5 <- p3 + geom_text_repel(data = subset(stats_table, SigPandFold),
+                           aes(label = Metabolite))
+p5
+
+ggsave("data_output/fig2a-volcano-plot.pdf", dpi = 300) # saved p5
+
+```
+
+
+
+
+```{r VISUALIZATION SIGNIFICANT METABOLITES}
+
+# Filter to metabolites those significant with >2 log(2)fold change and p <0.05
+sig.metab <- stats_table %>% filter(Log2FC > 1 | Log2FC < -1) %>% filter(p < 0.05)
+
+# Write CSV if desired
+filename.sigmetab <- paste0("data_output/ESCA-Table-S6-sig-metab-only", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+write.csv(sig.metab, filename.sigmetab)
+
+# for visualization, trim esca.table5 to significant metabolites
+sig.list <- sig.metab$Metabolite
+sig.ESCA.Table5 <- ESCA_TableS5 %>% select(all_of(c(MetaVars, sig.list)))
+
+# begin color scheme for major sample metadata features of interest
+mycolors = c()
+mycolors$Response["RVT"]   = "#ed5565"
+mycolors$Response["PCR"]   = "#1ab394"
+
+# this is for stats
+my_comparisons = list( c("PCR", "RVT"))
+
+# melting data to visualize
+pre.plot <- sig.ESCA.Table5 %>% select(c(1, 6:15))
+plot = melt(pre.plot, id=c("SampleID","Response"))
+# don't need since already numeric 
+# plot$value = as.numeric(plot$value)
+myFeature = colnames(sig.ESCA.Table5)[7:ncol(sig.ESCA.Table5)]
+
+#ggplot code
+for (myTitle in myFeature){
+  tmp_plot = plot[plot$variable == myTitle,]
+  tmp_plot$Response = factor(tmp_plot$Response,levels = c("RVT","PCR"))
+  p6 <- ggplot(tmp_plot, aes(x=Response, y=value)) +
+    geom_boxplot(aes(color=Response),fill=NA, outlier.size=0, coef=1e100, alpha=0.9) +
+    geom_point(aes(fill=Response), color="black", pch=21, alpha=0.9, size=2.5, position=position_dodge(width=0.75)) +
+    theme_bw() +
+    scale_fill_manual(values=mycolors$Response) +
+    theme(axis.text.x  = element_text(size=8, colour="black"),
+          axis.text.y  = element_text(size=9, colour="black"),
+          axis.title.x = element_text(size=10, colour="black"),
+          axis.title.y = element_text(size=10, colour="black"),
+          plot.title   = element_text(size=9, colour="black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          aspect.ratio=1.2) +
+    xlab(NULL) + # no label for x axis
+    ylab("Relative Abundance") +
+    ggtitle(myTitle) +
+    #scale_y_log10(breaks=c(0.01, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 25, 50, 100), expand=c(0.05,0.07)) +
+    stat_compare_means(aes(label=..p.signif..), comparisons=my_comparisons, label.y.npc='top', method="wilcox.test", size = 3)
+  
+  ggsave(paste("./data_output/metabolite-pdfs/", myTitle, ".pdf", sep=""), plot=p6, width=4, height=3.5)
+}
+
+# pdfs are in output folder as specified above
+
+```
+
+
+```{r spearman correlation}
+
+library(readxl)
+library(ggplot2)
+library(pheatmap)
+library(cowplot)
+library(psych)
+
+#load species data
+species =  as.data.frame(read_excel("data_input/esca_species.xlsx",sheet = 1))
+rownames(species) = species$SampleID
+diff = as.data.frame(read.csv("data_input/species-otu.avgGTE0.01Prct-stats-results.csv", check.names = F, row.names = 1))
+
+#select the species that are sig after FDR correction, this is just to get the list n=5
+diff.mw = na.omit(diff[diff$p.adj < 0.05,])
+species_mw = species[,rownames(diff.mw)]
+
+#select the species that are were identified as significant by lefse
+species_lefse = species %>% select(c("Bacteroides_vulgatus", "Bacteroides_uniformis", "Bacteroides_massiliensis", "Bacteroides_uniformis", "Bacteroides_vulgatus", "Fusicatenibacter_saccharivorans",  "Roseburia_inulinivorans", "otu1404.Roseburia_inulinivorans", "otu156.Clostridium_bolteae", "otu1600.Ruminococcus_callidus", "otu302.Faecalibacterium_prausnitzii", "otu3285.Bacteroides_barnesiae", "otu3601.Bacteroides_barnesiae", ,   "otu4818.Prevotella_loescheii" ))
+
+#combine both species lists and remove duplicates
+species_data <- merge(species_mw, species_lefse, by = 'row.names', all = TRUE) 
+species_data <- species_data %>% select(!ends_with(".y"))
+species_data <- species_data %>% rename(SampleID = Row.names)
+
+#load metabolite data
+metab_all = as.data.frame(read.csv("data_input/ESCA_TableS5.csv",check.names = F,row.names = 1))
+metab_all = metab_all[,6:ncol(metab_all)]
+
+#filter to metabolites sig by pvalue and fold chance from volcano plot
+rownames(sig.metab) = metab_sig$Metabolite
+metab_data = metab_all[ , rownames(sig.metab)]
+metab_data = rownames_to_column(metab_data, var = "SampleID")
+
+# merge species and metabolites by SampleID
+sig_all = left_join(metab_data, species_data, by = "SampleID")
+
+# write csv
+filename.cor <- paste0("data_output/spearman-correlation-matrix", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+write.csv(sig_all, filename.cor)
+
+# calculation spearman correlation
+ct <- corr.test(sig_all[2:10],
+                sig_all[11:25],
+                method="spearman",
+                adjust="BH",
+                alpha =0.05) 
+
+pvalue<-ct$p.adj
+p=pvalue
+
+#p <- pvalue[apply(pvalue,1,min,na.rm=T)<0.05,]
+#p <- p[,apply(p,2,min,na.rm=T)<0.05]
+#p = as.data.frame(p)
+
+plot = ct$r
+plot= plot[rownames(p),]
+plot = plot[,colnames(p)]
+
+# write csv
+filename.plot <- paste0("data_output/spearman-correlation-value", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+filename.p <- paste0("data_output/spearman-correlation-padj", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+
+write.csv(plot, filename.plot)
+write.csv(p, filename.p)
+
+write.csv(plot,file="data_output/spearman-correlation-value.csv",col.names = NA)
+write.csv(p,file="output/spearman-correlation-padj.csv",col.names = NA)
+
+###pheatmap to visualize fig 2b
+
+mycol<-c(colorRampPalette(c('#0072b2','white'))(9),
+         colorRampPalette(c('white','white'))(3),
+         colorRampPalette(c('white','#d55e00'))(9))
+bk<-seq(-1,1,by=0.1)
+
+label<-matrix("", nrow=nrow(p), ncol=ncol(p))
+label[which(p<0.05)]<-"*"
+label[which(p<0.01)]<-"**"
+label[which(p<0.001)]<-"***"
+mycol<-c(colorRampPalette(c('#0072b2','white'))(9),
+         colorRampPalette(c('white','white'))(3),
+         colorRampPalette(c('white','#d55e00'))(9))
+
+pheatmap(plot,cellwidth = 15,cellheight = 15,cluster_rows = T,
+         cluster_cols=F,display_numbers = label,angle_col = 45,number_color = "white",
+         color=mycol,legend_breaks = seq(-1,1,by=0.2),
+         breaks=bk)->y
+C<-plot_grid(y$gtable)
+
+ggsave(C, file="data_output/spearman-correlation-heatmap.pdf",height = 10,width = 10)
+
+```
+
+

@@ -1,0 +1,24 @@
+"RecordID","pathCR","c_Clostridia.o_Clostridiales.f_Ruminococcaceae.g_Faecalibacterium","c_Bacteroidia.o_Bacteroidales.f_Bacteroidaceae.g_Bacteroides","c_Clostridia.o_Clostridiales.f_Lachnospiraceae.g_Blautia","c_Clostridia.o_Clostridiales.f_unassigned.g_unassigned","c_Clostridia.o_Clostridiales.f_Lachnospiraceae.g_Clostridium_XlVa","c_Bacilli.o_Lactobacillales.f_Streptococcaceae.g_Streptococcus","c_Clostridia.o_Clostridiales.f_Lachnospiraceae.g_Roseburia","c_Clostridia.o_Clostridiales.f_Ruminococcaceae.g_Ruminococcus","c_Erysipelotrichia.o_Erysipelotrichales.f_Erysipelotrichaceae.g_Clostridium_XVIII","c_Clostridia.o_Clostridiales.f_Lachnospiraceae.g_unassigned","c_Clostridia.o_Clostridiales.f_Lachnospiraceae.g_Dorea","c_Clostridia.o_Clostridiales.f_Peptostreptococcaceae.g_Clostridium_XI","c_Clostridia.o_Clostridiales.f_Ruminococcaceae.g_Oscillibacter","c_Actinobacteria.o_Coriobacteriales.f_Coriobacteriaceae.g_Collinsella","c_Clostridia.o_Clostridiales.f_Ruminococcaceae.g_unassigned","p_unassigned.c_unassigned.o_unassigned.f_unassigned.g_unassigned","c_unassigned.o_unassigned.f_unassigned.g_unassigned.1","c_Clostridia.o_Clostridiales.f_Lachnospiraceae.g_Coprococcus","c_Clostridia.o_Clostridiales.f_Clostridiaceae_1.g_Clostridium_sensu_stricto","Other.taxa"
+"MD043.001","PathCR 0",16.18,3.05,4.81,7.27,4.91,3.83,8.19,8.99,2.18,3.07,1.82,7.67,1.43,0.87,5.99,0.86,0.1,1.38,5.68,11.72
+"MD043.009","PathCR 0",1.12,6.42,14.28,16.96,9.41,4.15,1.78,4.5,0.44,2.5,2.45,2.77,8.27,4.04,1.44,0.03,0,0,0.04,19.4
+"MD043.010","PathCR 0",9.62,30.6,7.02,3.23,4.65,6.94,6.07,0.04,0.13,2.14,2.67,2.52,1.11,1.79,0.87,0,0,1.36,2.27,16.97
+"MD043.014","PathCR 0",4.28,36.54,5.37,2.35,12.49,2.72,3.15,0.84,5.04,6.36,1.77,0.12,1.27,2.22,0.95,0.23,0.13,0.52,0.03,13.62
+"MD043.016","PathCR 0",16.18,6.3,9.51,7.3,10.25,0.29,4.23,1.7,7.99,6.58,2.3,0,1.59,0.71,0.97,2.5,0.23,1.07,0.06,20.24
+"MD043.022","PathCR 0",26.24,5.02,4.54,3.46,9.01,0.21,9.98,7.08,3.53,3.57,2.2,1.97,0.41,0.86,0.22,0.6,0.01,0.95,0.02,20.12
+"MD043.027","PathCR 0",57.85,1.52,0.26,15.05,1.04,1.22,2.64,1.82,1.9,0.9,0.55,2.5,0.59,0.02,0.7,2.25,0.25,0.86,1.95,6.13
+"MD043.028","PathCR 0",20.44,17.88,3.49,7.38,2.79,5.71,4.07,7.48,0.79,3.22,3.58,7.68,0.61,0.47,1.12,1.33,0,1.12,0.42,10.42
+"MD043.031","PathCR 0",3.98,2.49,5.09,12.12,4.07,3.69,1.3,13.68,0.84,6.7,1.01,0.45,3.16,0,2.03,0.22,14.39,2.12,0.01,22.65
+"MD043.035","PathCR 0",5.4,1.94,8.54,8.17,11.06,23.35,1.8,9.83,1.23,3.39,2.17,3.56,2.82,1.77,1.32,5.52,0.01,0.86,0.25,7.01000000000001
+"MD043.039","PathCR 0",1.92,4.56,6.24,8.28,5.22,1.04,2.44,5.72,0,4.14,2.28,1.9,4.4,0.6,2.2,4.92,0.02,1.4,0.02,42.7
+"PA009.029","PathCR 0",1.23,0.54,6.76,17.78,1.03,0.92,0.7,0.18,50.09,8.69,6.54,0.01,0.03,0.93,0.08,1.12,0.3,0.1,0,2.97
+"PA009.030","PathCR 0",30.68,3.92,2.04,13.09,1.65,3.08,0.79,6.14,3.9,6.87,3.06,0.02,1.83,0.05,2.79,3.65,0.52,3.53,0,12.39
+"PA009.036","PathCR 0",5.67,35.85,13.72,6.25,5.75,2.41,6.46,0.32,1.37,0.48,2.96,0.01,0.59,1.86,0.85,0.04,0,0.35,0.1,14.96
+"TX012.032","PathCR 0",2.71,12.09,18.91,4.22,5.25,9.84,4.04,2.5,2.6,0.16,1.1,1.18,4.15,0.29,3.26,0.34,0.67,0.97,3.13,22.59
+"MD043.002","PathCR 1",28.9,15.78,1.7,4.1,7.98,2.61,9.26,4.06,0.32,1.21,1.58,7.27,2.09,0.65,3.1,0.65,0.02,0.89,0.6,7.23
+"MD043.003","PathCR 1",12.35,4.96,6.92,4.91,4.66,6.23,2.41,14.54,0.5,2.95,1.63,8.51,2.66,3.5,1.86,0.73,2.65,0.87,1.94,15.22
+"MD043.006","PathCR 1",40.41,29.56,2.98,0.49,3.96,1.57,3.9,0.02,1.27,1.7,1.67,0.04,0.44,0.1,0.11,0,0,0.08,0.01,11.69
+"MD043.007","PathCR 1",0.24,4.7,24.02,4.71,9.83,1.3,10.7,13.78,1.25,1.68,0.78,0.01,0.52,12.44,1.1,0.21,0,0.06,1.05,11.62
+"MD043.012","PathCR 1",12.97,34.82,7.25,1.99,8.13,2.81,2.6,2.07,4.2,2.47,1.78,0,0.88,0.58,1.55,0.21,5.29,2.29,0,8.11
+"MD043.015","PathCR 1",19.59,22.4,11.47,1.94,12.36,0.47,7.82,1.17,6.27,2.85,2.73,0.06,0.37,1.39,0.43,0.24,0.01,1.21,0.15,7.07000000000001
+"MD043.019","PathCR 1",7.52,17.4,3.98,3.46,2.28,33.86,7.78,0.16,0.38,0.74,2.24,0.36,0.18,0,0.26,0.2,0,0.04,3.86,15.3
+"PA009.037","PathCR 1",14.39,13.46,11.09,2.83,13.06,1.41,15.93,5.46,2.46,2.64,1.95,0.43,0.17,0.82,1.68,0.23,0.27,0.29,0.26,11.17

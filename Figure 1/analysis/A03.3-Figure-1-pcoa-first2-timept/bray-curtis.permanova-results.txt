@@ -1,0 +1,75 @@
+
+Call:
+adonis(formula = bc.D ~ pathCR, data = bc.df, permutations = 1000) 
+
+Permutation: free
+Number of permutations: 1000
+
+Terms added sequentially (first to last)
+
+          Df SumsOfSqs MeanSqs F.Model      R2   Pr(>F)   
+pathCR     1    0.5631 0.56307  2.0613 0.04678 0.007992 **
+Residuals 42   11.4726 0.27316         0.95322            
+Total     43   12.0357                 1.00000            
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Call:
+adonis(formula = bc.D ~ path90, data = bc.df, permutations = 1000) 
+
+Permutation: free
+Number of permutations: 1000
+
+Terms added sequentially (first to last)
+
+          Df SumsOfSqs MeanSqs F.Model      R2   Pr(>F)   
+path90     1    0.5773 0.57730  2.1161 0.04797 0.005994 **
+Residuals 42   11.4584 0.27282         0.95203            
+Total     43   12.0357                 1.00000            
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Call:
+adonis(formula = bc.D ~ pathCR90Comp, data = bc.df, permutations = 1000) 
+
+Permutation: free
+Number of permutations: 1000
+
+Terms added sequentially (first to last)
+
+             Df SumsOfSqs MeanSqs F.Model      R2   Pr(>F)   
+pathCR90Comp  2    0.9104 0.45522  1.6776 0.07565 0.005994 **
+Residuals    41   11.1252 0.27135         0.92435            
+Total        43   12.0357                 1.00000            
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Call:
+adonis(formula = bc.D ~ CAP.regression.by.central.review, data = bc.df,      permutations = 1000) 
+
+Permutation: free
+Number of permutations: 1000
+
+Terms added sequentially (first to last)
+
+                                 Df SumsOfSqs MeanSqs F.Model      R2  Pr(>F)  
+CAP.regression.by.central.review  3    1.0789 0.35963  1.3129 0.08964 0.06394 .
+Residuals                        40   10.9568 0.27392         0.91036          
+Total                            43   12.0357                 1.00000          
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Call:
+adonis(formula = bc.D ~ cap.agg, data = bc.df, permutations = 1000) 
+
+Permutation: free
+Number of permutations: 1000
+
+Terms added sequentially (first to last)
+
+          Df SumsOfSqs MeanSqs F.Model      R2  Pr(>F)  
+cap.agg    1    0.4612 0.46124  1.6737 0.03832 0.02997 *
+Residuals 42   11.5744 0.27558         0.96168          
+Total     43   12.0357                 1.00000          
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
