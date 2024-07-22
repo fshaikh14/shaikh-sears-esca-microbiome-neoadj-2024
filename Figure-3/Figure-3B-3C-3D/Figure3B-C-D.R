@@ -213,41 +213,6 @@ for (txlevel in taxalevels){
       }
       Awmeta$RecordID = factor(Awmeta$RecordID, levels=pidCROrder)
       
-      p1 <- ggplot(Awmeta, aes_string(x="RecordID", y=myFeature)) +
-        geom_boxplot(aes(color=pathCR),fill=NA, outlier.size=0, coef=1e100, alpha=0.9) +
-        geom_point(aes(fill=pathCR), color="black", pch=21, alpha=0.9, size=2.5, position=position_dodge(width=0.75)) +
-        theme_bw() +
-        scale_fill_manual(values=mycolors$pathCR) +
-        theme(axis.text.x  = element_text(size=6, colour="black", angle=45, vjust=1, hjust=1),
-              axis.text.y  = element_text(size=8, colour="black"),
-              axis.title.x = element_text(size=12, colour="black"),
-              axis.title.y = element_text(size=12, colour="black"),
-              plot.title   = element_text(size=5, colour="black"),
-              panel.grid.major = element_blank(),
-              panel.grid.minor = element_blank(),
-              aspect.ratio=1) +
-        xlab(NULL) + # no label for x axis
-        ylab("% Ab.") +
-        ggtitle(myTitle) +
-        scale_y_log10(breaks=c(0.01, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 25, 50, 100)) +
-        ggtitle(myTitle)
-      
-      p2 <- ggbarplot(Awmeta, x="RecordID", y=myFeature, add="mean", fill="pathCR") +
-        theme_bw() +
-        scale_fill_manual(values=mycolors$pathCR) +
-        scale_color_manual(values=mycolors$pathCR) +
-        theme(axis.text.x      = element_text(size=8, colour="black", angle=45, hjust=1, vjust=1),
-              axis.text.y      = element_text(size=10, colour="black"),
-              axis.title.y     = element_text(size=9, colour="black"),
-              plot.title       = element_text(size=8),
-              panel.grid.major = element_blank(),
-              panel.grid.minor = element_blank(),
-              aspect.ratio     = 1.1,
-              legend.position  = "none") +
-        xlab(NULL)        +
-        ylab("% Ab.") +
-        ggtitle(myTitle)
-      
       p3 <- ggplot(Awmeta, aes_string(x="pathCR", y=myFeature)) +
         geom_boxplot(aes(color=pathCR),fill=NA, outlier.size=0, coef=1e100, alpha=0.9) +
         geom_point(aes(fill=pathCR), color="black", pch=21, alpha=0.9, size=2.5, position=position_dodge(width=0.75)) +
@@ -270,8 +235,6 @@ for (txlevel in taxalevels){
       
     }
     myFeatureName = substr(myFeature,0,200)
-    ggsave(paste(pdfdir, myFeatureName, ".01.pdf", sep=""), plot=p1, width=4, height=3.5)
-    ggsave(paste(pdfdir, myFeatureName, ".02.pdf", sep=""), plot=p2, width=4, height=3.5)
     ggsave(paste(pdfdir, myFeatureName, ".03.pdf", sep=""), plot=p3, width=4, height=3.5)
     
   } # end of features loop
@@ -296,3 +259,4 @@ for (txlevel in taxalevels){
   
   write.table(x=txStatsResults, file=paste(txdir,"/", txlevel, "-stats-results.csv", sep=""), col.names=TRUE, row.names=FALSE, sep=",")
 } # end of files loop
+1
