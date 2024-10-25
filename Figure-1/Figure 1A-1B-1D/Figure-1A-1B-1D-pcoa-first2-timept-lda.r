@@ -137,7 +137,12 @@ searshsimmunotxpcoa <- function(file, prefix){
   centroids <- aggregate(cbind(PC1,PC2)~pathCR, data=bc.df, mean)
   bc.df     <- merge(bc.df,centroids,by="pathCR",suffixes=c("",".centroid"))
 
-  # begin ggplot code for PCoA
+  #PERMANONA analysis - with correction for Study Arm, remove # to run code
+  # capture.output(adonis(bc.D ~ pathCR+Arm, data = bc.df, permutations = 1000), file=paste(analysisdir, prefix,".permanova-results.txt",sep=""))
+  # centroids <- aggregate(cbind(PC1,PC2)~pathCR, data=bc.df, mean)
+  # bc.df     <- merge(bc.df,centroids,by="pathCR",suffixes=c("",".centroid"))
+  
+    # begin ggplot code for PCoA
   p1 <- ggplot(bc.df, aes(x=PC1,y=PC2)) +
   geom_point(data=centroids, aes(x=PC1,y=PC2, fill=pathCR), pch=21, size=1) +
   geom_segment(aes(x=PC1.centroid, y=PC2.centroid, xend=PC1, yend=PC2, color=pathCR), alpha=0.5) +

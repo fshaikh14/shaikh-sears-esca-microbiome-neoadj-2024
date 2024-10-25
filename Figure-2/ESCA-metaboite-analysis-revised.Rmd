@@ -1,7 +1,7 @@
 ---
 title: "ESCA-metabolite-analysis"
 author: "FYS"
-date: "2024-04-09"
+date: "2024-04-09", revised 2024-10-08
 output: html_document
 ---
 
@@ -18,7 +18,7 @@ library(ggrepel)
 library(reshape2)
 library(ggpubr)
 
-# set up directories - configure per user
+# set up directories - configure per user, set to file source location
 # main_dir <- "C:/Users/fshaikh6/Desktop/Fecal metabolite analysis/"
 # output_dir <- "C:/Users/fshaikh6/Desktop/Fecal metabolite analysis/data_output"
 # input_dir <- "C:/Users/fshaikh6/Desktop/Fecal metabolite analysis/data_input"
@@ -49,17 +49,64 @@ metab <- rename(metab, intensity = value)
 
 # sort mean intensities into deciles to identify lowest one = 1
 # Dropping bottom 10% results in 1351 metabolites to 1215 metabolites, 136 dropped
-decile <- metab %>% mutate(quartile = ntile(intensity, 10))
-fil.metab <- decile %>% filter(!quartile %in% c("1")) 
-fil.metab <- fil.metab %>% column_to_rownames(var = "metabolite")
-dropped.metabolites <- decile %>% filter(quartile == 1)
+# decile <- metab %>% mutate(quartile = ntile(intensity, 10))
+# fil.metab <- decile %>% filter(!quartile %in% c("1")) 
+# fil.metab <- fil.metab %>% column_to_rownames(var = "metabolite")
+# dropped.metabolites <- decile %>% filter(quartile == 1)
 
 # create CSV for dropped metabolites to keep a record
-filename.dropped <- paste0("data_output/Metabolites-dropped-lowest-10th-decile", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
-write.csv(dropped.metabolites, filename.dropped)
+# filename.dropped <- paste0("data_output/Metabolites-dropped-lowest-10th-decile", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+# write.csv(dropped.metabolites, filename.dropped)
 
-filename.final <- paste0("data_output/Metabolites-final", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
-write.csv(fil.metab, filename.final)
+# filename.final <- paste0("data_output/Metabolites-final", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+# write.csv(fil.metab, filename.final)
+
+
+```
+
+
+
+Rerun code to not remove bottom 10%
+
+```{r}
+#load data
+ESCA_TableS5 <- read_csv("data_input/ESCA_TableS5.csv")
+ESCA_TableS5 <- as_tibble(ESCA_TableS5)
+
+#find means for metabolites for all and by response group
+metab.only <- ESCA_TableS5 %>% select(6:1357)
+metab.mean.all <- metab.only %>% summarise_if(is.numeric, mean, na.rm = TRUE)
+metab.mean.response <- metab.only %>% group_by(Response) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE)
+
+#assign column and row names
+metab.rows = colnames(metab.mean.all)
+metab.col = c("metabolite", "intensity")
+
+#pivot longer in order to filter easier on values
+metab <- metab.mean.all %>% pivot_longer(everything())
+metab <- rename(metab, metabolite = name)
+metab <- rename(metab, intensity = value)
+
+# sort mean intensities into deciles to identify lowest one = 1
+# Dropping bottom 10% results in 1351 metabolites to 1215 metabolites, 136 dropped
+# decile <- metab %>% mutate(quartile = ntile(intensity, 10))
+# fil.metab <- decile %>% filter(!quartile %in% c("1")) 
+# fil.metab <- fil.metab %>% column_to_rownames(var = "metabolite")
+# dropped.metabolites <- decile %>% filter(quartile == 1)
+
+fil.metab <- metab %>% column_to_rownames(var = "metabolite")
+
+# create CSV for dropped metabolites to keep a record
+# filename.dropped <- paste0("data_output/Metabolites-dropped-lowest-10th-decile", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+# write.csv(dropped.metabolites, filename.dropped)
+
+# filename.final <- paste0("data_output/Metabolites-final", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+# write.csv(fil.metab, filename.final)
+
+
+
+
 
 
 ```
@@ -155,10 +202,11 @@ p5 <- p3 + geom_text_repel(data = subset(stats_table, SigPandFold),
                            aes(label = Metabolite))
 p5
 
-ggsave("data_output/fig2a-volcano-plot.pdf", dpi = 300) # saved p5
+# ggsave("data_output/fig2a-volcano-plot.pdf", dpi = 300) # saved p5
+
+ggsave("data_output/fig2a-volcano-plot-all.pdf", dpi = 300) # saved p5
 
 ```
-
 
 
 
@@ -257,7 +305,7 @@ metab_all = as.data.frame(read.csv("data_input/ESCA_TableS5.csv",check.names = F
 metab_all = metab_all[,6:ncol(metab_all)]
 
 #filter to metabolites sig by pvalue and fold chance from volcano plot
-rownames(sig.metab) = metab_sig$Metabolite
+rownames(sig.metab) = sig.metab$Metabolite
 metab_data = metab_all[ , rownames(sig.metab)]
 metab_data = rownames_to_column(metab_data, var = "SampleID")
 
@@ -294,7 +342,7 @@ write.csv(plot, filename.plot)
 write.csv(p, filename.p)
 
 write.csv(plot,file="data_output/spearman-correlation-value.csv",col.names = NA)
-write.csv(p,file="output/spearman-correlation-padj.csv",col.names = NA)
+write.csv(p,file="data_output/spearman-correlation-padj.csv",col.names = NA)
 
 ###pheatmap to visualize fig 2b
 
@@ -321,4 +369,64 @@ ggsave(C, file="data_output/spearman-correlation-heatmap.pdf",height = 10,width 
 
 ```
 
+```{r}
+
+# FIGURE 2E - extended spearman correlation with all species and significant metabolites
+
+library(readxl)
+library(ggplot2)
+library(pheatmap)
+library(cowplot)
+library(psych)
+
+
+#load species data
+species =  as.data.frame(read_excel("data_input/esca_species.xlsx",sheet = 1))
+rownames(species) = species$SampleID
+diff = as.data.frame(read.csv("data_input/species-otu.avgGTE0.01Prct-stats-results.csv", check.names = F, row.names = 1))
+
+#load metabolite data
+metab_all = as.data.frame(read.csv("data_input/ESCA_TableS5.csv",check.names = F,row.names = 1))
+metab_all = metab_all[,6:ncol(metab_all)]
+
+#filter to metabolites sig by pvalue and fold chance from volcano plot
+rownames(sig.metab) = sig.metab$Metabolite
+metab_data = metab_all[ , rownames(sig.metab)]
+metab_data = rownames_to_column(metab_data, var = "SampleID")
+
+# merge species and metabolites by SampleID
+all_data = left_join(metab_data, species, by = "SampleID")
+
+# write csv
+filename.cor <- paste0("data_output/spearman-correlation-matrix-allspecies-sigmetab", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+write.csv(sig_all, filename.cor)
+
+# calculation spearman correlation
+ct <- corr.test(all_data[2:10],
+                all_data[35:505],
+                method="spearman",
+                adjust="BH",
+                alpha =0.05) 
+
+pvalue<-ct$p.adj
+p=pvalue
+
+#p <- pvalue[apply(pvalue,1,min,na.rm=T)<0.05,]
+#p <- p[,apply(p,2,min,na.rm=T)<0.05]
+#p = as.data.frame(p)
+
+plot = ct$r
+plot= plot[rownames(p),]
+plot = plot[,colnames(p)]
+
+# write csv
+filename.plot <- paste0("data_output/spearman-correlation-allspecies-sigmetab", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+filename.p <- paste0("data_output/spearman-correlation-padj-allspecies-sigmetab", format(Sys.time(), "_%Y-%m-%d %I-%p"), ".csv")
+
+write.csv(plot, filename.plot)
+write.csv(p, filename.p)
+
+
+```
+```
 
