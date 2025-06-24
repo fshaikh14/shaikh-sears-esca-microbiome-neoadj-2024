@@ -1,4 +1,5 @@
 # shaikh-sears-neoadj-esca-microbiome-2024
+# public version with DOI at https://github.com/shaikhlab/2024-esca-microbiome
 
 # This repository contains the code associated with the following manuscript: Fecal microbiome composition correlates with pathologic complete response in patients with operable esophageal cancer treated with combined chemoradiotherapy and immunotherapy
 
